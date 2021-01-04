@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Ground
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: background
+    uniqueID: 1132693639
+    locked: 0
+  - name: back_tree
+    uniqueID: 2696329143
+    locked: 0
+  - name: forestone
+    uniqueID: 3863477059
+    locked: 0
+  - name: player
+    uniqueID: 1363314241
+    locked: 0
+  - name: grass
+    uniqueID: 364506343
+    locked: 0
+  - name: forestone_dark
+    uniqueID: 2637521039
+    locked: 0
+  - name: fog
+    uniqueID: 1238583045
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
