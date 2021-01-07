@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnimyComponentCabine : MonoBehaviour, DistanceCheckListener
+public class EnimyComponentCabine : MonoBehaviour, DistanceCheckListener, CollisionListener
 {
+
+    public float speed;
+    public float chaseDistance;
+
+
+    private Transform target;
+    private Vector2 homePosition;
     private bool isWorking = true;
-    private bool isCollided = false;
     private bool isMinDistanceReached = false;
 
 
@@ -29,11 +35,26 @@ public class EnimyComponentCabine : MonoBehaviour, DistanceCheckListener
 
     public void onInsaneDistance()
     {
-        Destroy(gameObject);
-        isWorking = false;
+        DestroyElement();
     }
 
 
+    public void onCollide()
+    {
+        DestroyElement();
+    }
+
+
+    public void onExitCollide()
+    {
+
+    }
+
+    private void Start()
+    {
+        homePosition = transform.position;
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     // Update is called once per frame
     private float previousYVelocity = 0f;
@@ -66,11 +87,54 @@ public class EnimyComponentCabine : MonoBehaviour, DistanceCheckListener
                 engine1.MakeImpulse(impulse);
             if (engine2 != null)
                 engine2.MakeImpulse(impulse);
+
         }
-           
+        Chase();
                
             
             
     }
 
+    private void Chase()
+    {
+        if (target == null)
+        {
+            ReturnHome();
+            return;
+        }
+        var toTargetXCathet = Mathf.Abs(transform.position.x - target.position.x);
+        var toTargetYCathet = Mathf.Abs(transform.position.y - target.position.y);
+
+        var distanceToTarget = Mathf.Pow(toTargetXCathet * toTargetXCathet + toTargetYCathet * toTargetYCathet, 0.5f);
+        if(distanceToTarget > chaseDistance)
+        {
+            Debug.Log("lOST TARGET");
+            ReturnHome();
+            return;
+        }
+        transform.position = Vector2.MoveTowards(transform.position, new Vector2(target.position.x, 0f), speed * Time.deltaTime);
+    }
+
+    private void ReturnHome()
+    {
+        if (CheckIfTargetReached(homePosition))
+            return;        
+
+        transform.position = Vector2.MoveTowards(transform.position, new Vector2(homePosition.x, 0f), speed * Time.deltaTime);
+    }
+
+    private bool CheckIfTargetReached(Vector2 target)
+    {
+        var currentPosX = transform.position.x;
+        var targetPosX = target.x;
+        if (Mathf.Abs(targetPosX - currentPosX) < 0.5)
+            return true;
+        return false;
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, chaseDistance);
+    }
 }

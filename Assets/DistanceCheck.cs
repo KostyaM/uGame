@@ -24,5 +24,7 @@ public class DistanceCheck : MonoBehaviour
 
         if(distance > insaneDistance)
             listener.GetComponent<DistanceCheckListener>().onInsaneDistance();
+        if(distance < 0.02)
+            listener.GetComponent<CollisionListener>().onCollide();
     }
 }

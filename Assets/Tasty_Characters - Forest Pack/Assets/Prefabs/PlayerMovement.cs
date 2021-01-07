@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour, CollisionListener
+public class PlayerMovement : DamageableComponent, CollisionListener
 {
     public float movementSpeed = 2f;
     public float jumpForce = 4f;
@@ -11,12 +11,18 @@ public class PlayerMovement : MonoBehaviour, CollisionListener
 
     private bool isFacingLeft = true;
 
-    
+    private bool isPlayable = true;
+    public override void DestroyElement(float delay)
+    {
+        isPlayable = false;
+        Destroy(gameObject, delay);
+    }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (!isPlayable)
+            return;
         var movement = new Vector2(Input.GetAxis("Horizontal"), 0f);
         if (movement.x > 0 && isFacingLeft)
         {
