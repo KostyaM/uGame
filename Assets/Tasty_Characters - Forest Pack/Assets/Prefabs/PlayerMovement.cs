@@ -7,6 +7,7 @@ public class PlayerMovement : DamageableComponent, CollisionListener
     public float movementSpeed = 2f;
     public float jumpForce = 4f;
     public bool isJumping = false;
+    public GameObject menu;
 
 
     private bool isFacingLeft = true;
@@ -15,6 +16,7 @@ public class PlayerMovement : DamageableComponent, CollisionListener
     public override void DestroyElement(float delay)
     {
         isPlayable = false;
+        menu.GetComponent<DefeatListener>().onDefeat();
         Destroy(gameObject, delay);
     }
 

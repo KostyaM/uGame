@@ -6,6 +6,7 @@ public class GroundCollision : MonoBehaviour
 {
 
     public GameObject collidableObject;
+    private bool inDeathZone = false;
 
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -13,6 +14,10 @@ public class GroundCollision : MonoBehaviour
         if (collision.collider.tag == "Ground")
         {
             collidableObject.GetComponent<CollisionListener>().onCollide();
+        }
+        if (collision.collider.tag == "DeathZone")
+        {
+            inDeathZone = true;
         }
     }
 
@@ -22,5 +27,16 @@ public class GroundCollision : MonoBehaviour
         {
             collidableObject.GetComponent<CollisionListener>().onExitCollide();
         }
+        if(collision.collider.tag == "DeathZone")
+        {
+            inDeathZone = false;
+        }
+
+    }
+
+    private void Update()
+    {
+        if(inDeathZone)
+            collidableObject.GetComponent<DamageableComponent>().Damage(1);
     }
 }
