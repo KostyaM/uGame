@@ -96,14 +96,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd70a7bf77d8e464294ba0af940d1a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBarObj: {fileID: 0}
+  health: 1
   fieldOfImpact: 4
   force: 300
   delay: 2000
   damage: 100
   blustSound: {fileID: 8300000, guid: 8524588a69a4f3e40bb597b6221138f1, type: 3}
-  layerToHit:
-    serializedVersion: 2
-    m_Bits: 0
   explosionEffect: {fileID: 100006, guid: 93485fd5fc2ccf2439cb3239186f6382, type: 3}
 --- !u!50 &8675140791658918940
 Rigidbody2D:

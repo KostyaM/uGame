@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - FxTemporaire
+  - DeathZone
   layers:
   - Default
   - TransparentFX
@@ -66,4 +67,7 @@ TagManager:
     locked: 0
   - name: ui
     uniqueID: 1068063539
+    locked: 0
+  - name: menu
+    uniqueID: 3786272637
     locked: 0

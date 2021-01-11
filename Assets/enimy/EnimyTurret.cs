@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnimyTurret : DamageableComponent
 {
     public float range;
-    public Transform target;
+    private Transform target;
  
     Vector2 direction;
     public GameObject weapon;
@@ -25,6 +25,13 @@ public class EnimyTurret : DamageableComponent
     {
         isWorking = false;
         Destroy(gameObject, delay);
+    }
+
+    private void Start()
+    {
+        var objects = GameObject.FindGameObjectsWithTag("Player");
+        if (objects.Length != 0)
+            target = objects[0].transform;
     }
 
     // Update is called once per frame

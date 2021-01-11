@@ -12,7 +12,6 @@ public class BombBehaviour : MonoBehaviour
     public int damage;
     public AudioClip blustSound;
 
-    public LayerMask layerToHit;
     public GameObject explosionEffect;
 
 
@@ -51,7 +50,6 @@ public class BombBehaviour : MonoBehaviour
 
     private void applyForceToObj(GameObject obj)
     {
-        Debug.Log("Explode " + obj.name);
         var rigibody = obj.gameObject.GetComponent<Rigidbody2D>();
         if (rigibody == null)
         {
@@ -59,16 +57,20 @@ public class BombBehaviour : MonoBehaviour
             if (parent != null)
                 applyForceToObj(parent.gameObject);
         }
+
+        var distanceToObj = Mathf.Pow(Mathf.Pow(obj.transform.position.x - transform.position.x, 2) + Mathf.Pow(obj.transform.position.y - transform.position.y, 2), 0.5f);     
+        var distanceСoefficient = (fieldOfImpact - distanceToObj) / fieldOfImpact;
+
         if (rigibody != null)
         {
             var direction = obj.transform.position - transform.position;
-            rigibody.AddForce(direction * force);
+            rigibody.AddForce(direction * (force * distanceСoefficient));
         }
         
         var damageListener = obj.GetComponent<DamageableComponent>();
         if (damageListener != null)
         {
-            damageListener.Damage(damage, 0.5f);           
+            damageListener.Damage((int)(damage * distanceСoefficient), 0.5f);           
         }
     }
 

@@ -7,6 +7,7 @@ public class EnimyComponentCabine : MonoBehaviour, DistanceCheckListener, Collis
 
     public float speed;
     public float chaseDistance;
+    public GameObject[] drops;
 
 
     private Transform target;
@@ -18,7 +19,15 @@ public class EnimyComponentCabine : MonoBehaviour, DistanceCheckListener, Collis
     public void DestroyElement()
     {
         isWorking = false;
+
+        dropItem();
         Destroy(gameObject);
+    }
+
+    private void dropItem()
+    {
+        var dropPrefab = drops[Random.Range(0, drops.Length)];
+        Destroy(Instantiate(dropPrefab, transform.position, transform.rotation), 20);
     }
 
     public void onMinDistance()
@@ -53,7 +62,9 @@ public class EnimyComponentCabine : MonoBehaviour, DistanceCheckListener, Collis
     private void Start()
     {
         homePosition = transform.position;
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        var objects = GameObject.FindGameObjectsWithTag("Player");
+        if (objects.Length != 0)
+            target = objects[0].transform;
     }
 
     // Update is called once per frame
@@ -61,6 +72,8 @@ public class EnimyComponentCabine : MonoBehaviour, DistanceCheckListener, Collis
   
     void Update()
     {
+        if (Menu.isGamePaused)
+            return;
         if (isMinDistanceReached)
         {
             var velocity = GetComponent<Rigidbody2D>().velocity.y;
@@ -108,7 +121,6 @@ public class EnimyComponentCabine : MonoBehaviour, DistanceCheckListener, Collis
         var distanceToTarget = Mathf.Pow(toTargetXCathet * toTargetXCathet + toTargetYCathet * toTargetYCathet, 0.5f);
         if(distanceToTarget > chaseDistance)
         {
-            Debug.Log("lOST TARGET");
             ReturnHome();
             return;
         }
